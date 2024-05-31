@@ -1,0 +1,36 @@
+  <h1>Account: <%= account.NAME %></h1>
+  <h2>Balance: <%= account.AMOUNT %>$</h2>
+  <h2>Transactions:</h2>
+  <% transactions.forEach(function(transaction){ %>
+    <div style="display: flex; gap: 0.5rem">
+      <span><%= transaction.NAME %></span>
+      <span><%= transaction.AMOUNT %>$</span>
+      <span><%= transaction.TYPE === 1 ? 'In' : 'Out' %></span>
+    </div>
+  <% }); %>
+  <form action="/transactions" method="post">
+    <label>
+      Transaction Name: <input type="text" name="transactionName" placeholder="Transaction Name" required/>
+    </label>
+    <label>
+      Amount: <input type="number" name="amount" placeholder="Amount" required/>
+    </label>
+    <label>
+      Type:
+      <select name="type" required>
+        <option value="1">In</option>
+        <option value="0">Out</option>
+      </select>
+    </label>
+    <input type="hidden" name="accountId" value="<%= account.ID %>"/>
+    <input type="hidden" name="userId" value="<%= account.USER_ID %>"/>
+    <input type="submit" value="Create Transaction">
+  </form>
+  <form action="/accounts/<%= account.ID %>/exports" method="post">
+    <input type="submit" value="Create csv">
+  </form>
+  <a href="/accounts/<%= account.ID %>/exports">Download csv</a>
+  <style>
+    /* Add your styles here */
+  </style>
+
