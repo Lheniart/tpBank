@@ -8,4 +8,8 @@ async function getTransactionsByAccountId(accountId) {
     return await transactionRepository.getTransactionsByAccountId(accountId);
 }
 
-module.exports = { createTransaction, getTransactionsByAccountId };
+async function getTransactionsUpToBudget(accountId, budget) {
+    return await transactionRepository.getTransactionsUpToBudget(accountId, budget);
+}
+
+module.exports = { createTransaction, getTransactionsByAccountId, getTransactionsUpToBudget };

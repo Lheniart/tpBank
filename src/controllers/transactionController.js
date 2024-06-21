@@ -15,4 +15,17 @@ async function createTransaction(req, res) {
     }
 }
 
-module.exports = { createTransaction };
+async function getTransactionsUpToBudget(req, res) {
+    try {
+        const transactions = await transactionService.getTransactionsUpToBudget(
+            req.params.accountId,
+            req.params.amount
+        );
+        res.json(transactions);
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+    }
+}
+
+module.exports = { createTransaction, getTransactionsUpToBudget };

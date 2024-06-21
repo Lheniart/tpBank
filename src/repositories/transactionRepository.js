@@ -26,5 +26,23 @@ async function getTransactionsByAccountId(accountId) {
     return result.rows;
 }
 
+async function getTransactionsUpToBudget(accountId, budget) {
+    const connection = await connectToDatabase();
+    const result = await connection.execute(
+        `BEGIN get_transactions_up_to_budget(:accountId, :budget, :cursor); END;`,
+        {
+            accountId,
+            budget,
+            cursor: { dir: oracledb.BIND_OUT, type: oracledb.CURSOR }
+        }
+    );
 
-module.exports = { insertTransaction, getTransactionsByAccountId };
+    const resultSet = result.outBinds.cursor;
+    const transactions = await resultSet.getRows(10000);
+    await resultSet.close();
+
+    return transactions;
+}
+
+
+module.exports = { insertTransaction, getTransactionsByAccountId, getTransactionsUpToBudget };

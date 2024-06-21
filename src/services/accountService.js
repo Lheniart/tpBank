@@ -7,5 +7,12 @@ async function createAccount(userId, accountName) {
 async function getAccounts() {
     return await accountRepository.getAllAccounts();
 }
+async function exportCSV(accountId) {
+    return await accountRepository.exportTransaction(accountId);
+}
 
-module.exports = { createAccount, getAccounts };
+async function dlCSV(accountId) {
+    return await accountRepository.dlCSV();
+}
+
+module.exports = { createAccount, getAccounts, exportCSV, dlCSV };
