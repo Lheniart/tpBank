@@ -227,6 +227,13 @@ END;
         END IF;
     END;
     `);
+
+    await connection.execute(`CREATE OR REPLACE VIEW transactions_secure_view AS
+                          SELECT id,
+                                 amount,
+                                 creation_ts,
+                                 account_id
+                          FROM transactions`);
 }
 
 module.exports = setupDatabase;

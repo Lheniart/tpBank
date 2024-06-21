@@ -20,7 +20,7 @@ async function getTransactionsByAccountId(accountId) {
     const connection = await connectToDatabase();
     const result = await connection.execute(
         `SELECT id, name, amount, type, account_id, TO_CHAR(creation_ts, 'YYYY-MM-DD HH24:MI:SS') as creation_ts 
-        FROM transactions WHERE account_id = :accountId`,
+        FROM transactions_secure_view WHERE account_id = :accountId`,
         [accountId]
     );
     return result.rows;
@@ -43,6 +43,9 @@ async function getTransactionsUpToBudget(accountId, budget) {
 
     return transactions;
 }
+
+
+
 
 
 module.exports = { insertTransaction, getTransactionsByAccountId, getTransactionsUpToBudget };
